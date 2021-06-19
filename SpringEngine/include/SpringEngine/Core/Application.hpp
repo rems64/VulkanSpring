@@ -18,6 +18,7 @@ namespace SE
 		~Application();
 
 		static enum RenderingApi::Api getRenderingApi();
+		static const char* getName() { return m_instance->m_name; };
 		void selectRenderingApi(enum RenderingApi::Api api);
 
 		void startup();
@@ -35,6 +36,7 @@ namespace SE
 		std::shared_ptr<RenderingApi> m_renderingApi;
 		struct SE_ApplicationSettings m_settings;
 		std::vector<std::shared_ptr<Window>> m_windows;
+		bool m_running;
 	};
 
 	// To be defined in client app

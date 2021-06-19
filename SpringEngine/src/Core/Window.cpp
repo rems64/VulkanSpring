@@ -21,7 +21,10 @@ namespace SE
 		{
 		case RenderingApi::Api::SE_VULKAN:
 		{
-			VulkanApi::destroyWindowSurface(m_surface);
+			break;
+		}
+		case RenderingApi::Api::SE_OPENGL:
+		{
 			break;
 		}
 		default:
@@ -35,16 +38,24 @@ namespace SE
 		m_window = glfwCreateWindow(m_width, m_height, m_name, nullptr, nullptr);
 		if(!m_window)
 			SE_CORE_CRITICAL("Failed to create GLFW window");
-		SE_CORE_INFO("Created window");
+		SE_CORE_INFO("New window alive");
 		switch (Application::getRenderingApi())
 		{
 			case RenderingApi::Api::SE_VULKAN:
 			{
-				m_surface = VulkanApi::createWindowSurface(m_window);
+				break;
+			}
+			case RenderingApi::Api::SE_OPENGL:
+			{
 				break;
 			}
 			default:
 				break;
 		}
+	}
+
+	bool Window::shouldClose()
+	{
+		return glfwWindowShouldClose(m_window);
 	}
 }

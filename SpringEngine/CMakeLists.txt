@@ -2,6 +2,8 @@
 
 project(SpringEngine VERSION 1.0.0)
 
+set(CMAKE_CXX_STANDARD 20)
+
 # SpringEngine definitions
 add_compile_definitions(SE_PLATEFORM_WINDOWS)
 add_compile_definitions(SE_BUILD_DLL)
@@ -15,7 +17,7 @@ set(SRCS
 	"src/Core/Application.cpp"
 	"src/Debug/Instrumentator.cpp"
 	"src/Debug/Logger.cpp"
-	 "src/Graphics/Vulkan/VulkanApi.cpp" "src/Graphics/RenderingApi.cpp" "src/Core/Window.cpp")
+	 "src/Graphics/Vulkan/VulkanApi.cpp" "src/Graphics/RenderingApi.cpp" "src/Core/Window.cpp"  "src/Graphics/Vulkan/Device.cpp" "src/Graphics/Vulkan/QueueFamily.cpp" "src/Graphics/Renderer.cpp" "src/Graphics/Vulkan/VulkanRenderer.cpp")
 
 set(IMGUI_SRCS
 	"lib/ImGui/imgui.cpp"
