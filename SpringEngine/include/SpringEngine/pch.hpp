@@ -18,3 +18,7 @@
 #include <SpringEngine/Core/Core.hpp>
 #include <SpringEngine/Debug/Instrumentator.hpp>
 #include <SpringEngine/Debug/Logger.hpp>
+
+#include <spdlog/fmt/fmt.h>
+#include <spdlog/fmt/ostr.h>
+#include <spdlog/fmt/bundled/ostream.h>

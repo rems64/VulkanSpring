@@ -17,7 +17,23 @@ set(SRCS
 	"src/Core/Application.cpp"
 	"src/Debug/Instrumentator.cpp"
 	"src/Debug/Logger.cpp"
-	 "src/Graphics/Vulkan/VulkanApi.cpp" "src/Graphics/RenderingApi.cpp" "src/Core/Window.cpp"  "src/Graphics/Vulkan/Device.cpp" "src/Graphics/Vulkan/QueueFamily.cpp" "src/Graphics/Renderer.cpp" "src/Graphics/Vulkan/VulkanRenderer.cpp")
+	"src/Graphics/Vulkan/VulkanApi.cpp"
+	"src/Graphics/RenderingApi.cpp"
+	"src/Core/Window.cpp"
+	"src/Graphics/Vulkan/Device.cpp"
+	"src/Graphics/Vulkan/QueueFamily.cpp"
+	"src/Graphics/Renderer.cpp"
+	"src/Graphics/Vulkan/VulkanRenderer.cpp"
+	"src/Graphics/Vulkan/VulkanSurface.cpp"
+	"src/Graphics/Surface.cpp"
+	"src/Graphics/SwapChain.cpp"
+	"src/Graphics/Vulkan/VulkanSwapChain.cpp"
+	"src/Graphics/Shader.cpp"
+	"src/Graphics/Pipeline.cpp"
+	"src/Graphics/Vulkan/VulkanPipeline.cpp"
+	"src/Graphics/Viewport.cpp"
+	"src/Graphics/Vulkan/VulkanViewport.cpp"
+	)
 
 set(IMGUI_SRCS
 	"lib/ImGui/imgui.cpp"

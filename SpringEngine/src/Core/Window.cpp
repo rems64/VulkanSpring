@@ -2,6 +2,7 @@
 
 #include <SpringEngine/Core/Application.hpp>
 #include <SpringEngine/Graphics/Vulkan/VulkanApi.hpp>
+#include <SpringEngine/Graphics/Vulkan/VulkanSurface.hpp>
 
 namespace SE
 {
@@ -17,19 +18,6 @@ namespace SE
 
 	Window::~Window()
 	{
-		switch (Application::getRenderingApi())
-		{
-		case RenderingApi::Api::SE_VULKAN:
-		{
-			break;
-		}
-		case RenderingApi::Api::SE_OPENGL:
-		{
-			break;
-		}
-		default:
-			break;
-		}
 	}
 
 	void Window::init()
@@ -39,6 +27,8 @@ namespace SE
 		if(!m_window)
 			SE_CORE_CRITICAL("Failed to create GLFW window");
 		SE_CORE_INFO("New window alive");
+
+		m_surface = Surface::build(this);
 		switch (Application::getRenderingApi())
 		{
 			case RenderingApi::Api::SE_VULKAN:

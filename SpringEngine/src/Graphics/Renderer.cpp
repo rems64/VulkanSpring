@@ -21,7 +21,11 @@ namespace SE
 		{
 			case RenderingApi::Api::SE_VULKAN:
 			{
-				return make_shared<VulkanRenderer>();
+				return std::make_shared<VulkanRenderer>();
+			}
+			default:
+			{
+				return std::make_shared<Renderer>();
 			}
 		}
 	}

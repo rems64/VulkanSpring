@@ -6,7 +6,7 @@ namespace SE
 	{
 	public:
 		Renderer();
-		~Renderer();
+		virtual ~Renderer();
 
 		static std::shared_ptr<Renderer> build();
 	};

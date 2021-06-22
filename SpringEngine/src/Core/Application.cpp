@@ -1,6 +1,7 @@
 #include <SpringEngine/Core/Application.hpp>
 
 #include <SpringEngine/Core/Window.hpp>
+#include <SpringEngine/Graphics/Renderer.hpp>
 
 namespace SE
 {
@@ -35,6 +36,8 @@ namespace SE
 	Application::~Application()
 	{
 		SE_CORE_INFO("Closing app...");
+		m_renderer->~Renderer();
+		m_renderingApi->~RenderingApi();
 	}
 
 	void Application::selectRenderingApi(RenderingApi::Api api)
@@ -63,8 +66,12 @@ namespace SE
 		m_renderingApi = RenderingApi::build();
 		m_renderingApi->init();
 		m_renderingApi->create();
+
+		m_renderer = Renderer::build();
+
 		std::shared_ptr<Window> defaultWindow = std::make_shared<Window>("Vulkan powered window", 1280, 720);
 		m_windows.emplace_back(defaultWindow);
+
 	}
 
 	void Application::run()

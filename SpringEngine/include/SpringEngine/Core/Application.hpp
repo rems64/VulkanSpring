@@ -6,6 +6,7 @@
 namespace SE
 {
 	class Window;
+	class Renderer;
 	struct SE_ApplicationSettings
 	{
 		RenderingApi::Api renderingApi;
@@ -37,6 +38,7 @@ namespace SE
 		struct SE_ApplicationSettings m_settings;
 		std::vector<std::shared_ptr<Window>> m_windows;
 		bool m_running;
+		std::shared_ptr<Renderer> m_renderer;
 	};
 
 	// To be defined in client app

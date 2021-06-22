@@ -1,8 +1,11 @@
 #pragma once
 
+#include <SpringEngine/Graphics/Surface.hpp>
+
 namespace SE
 {
 	class Swapchain;
+	class Surface;
 	class Window
 	{
 	public:
@@ -19,9 +22,8 @@ namespace SE
 		const char* m_name;
 		uint32_t m_width;
 		uint32_t m_height;
-		VkSurfaceKHR m_surface;
 		GLFWwindow* m_window;
-		std::shared_ptr<Swapchain> m_swapchain;
+		std::shared_ptr<Surface> m_surface;
 		bool m_shouldClose;
 	};
 }
