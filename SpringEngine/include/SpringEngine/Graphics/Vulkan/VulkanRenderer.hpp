@@ -7,6 +7,7 @@ namespace SE
 {
 	// Forward declaration
 	class Device;
+	class Pipeline;
 
 	class SE_API VulkanRenderer : public Renderer
 	{
@@ -15,7 +16,9 @@ namespace SE
 		virtual ~VulkanRenderer();
 
 		static Device* getDevice() { return m_device.get(); };
+		Pipeline* getPipeline() { return m_pipeline.get(); };
 	private:
 		static std::shared_ptr<Device> m_device;
+		std::shared_ptr<Pipeline> m_pipeline;
 	};
 }

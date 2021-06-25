@@ -1,5 +1,7 @@
 #pragma once
 
+#include <SpringEngine/Core/Rect2D.hpp>
+
 namespace SE
 {
 	class Surface;
@@ -7,8 +9,11 @@ namespace SE
 	{
 	public:
 		SwapChain(Surface* surface);
-		~SwapChain();
+		virtual ~SwapChain();
 		
 		static std::shared_ptr<SwapChain> build(Surface* device);
+		Rect2Dui getExtent() { return m_extent; };
+	protected:
+		Rect2Dui m_extent;
 	};
 }

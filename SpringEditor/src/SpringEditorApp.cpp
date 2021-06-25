@@ -18,6 +18,5 @@ public:
 SE::Application* SE::createApp()
 {
 	SE::Application* application = new SpringEditorApp();
-	application->run();
 	return application;
 }

@@ -29,19 +29,6 @@ namespace SE
 		SE_CORE_INFO("New window alive");
 
 		m_surface = Surface::build(this);
-		switch (Application::getRenderingApi())
-		{
-			case RenderingApi::Api::SE_VULKAN:
-			{
-				break;
-			}
-			case RenderingApi::Api::SE_OPENGL:
-			{
-				break;
-			}
-			default:
-				break;
-		}
 	}
 
 	bool Window::shouldClose()

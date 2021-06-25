@@ -2,17 +2,16 @@
 
 #include <SpringEngine/Graphics/RenderingApi.hpp>
 #include <SpringEngine/Graphics/Vulkan/VulkanRenderer.hpp>
+#include <SpringEngine/Graphics/Pipeline.hpp>
 
 namespace SE
 {
 	Renderer::Renderer()
 	{
-
 	}
 
 	Renderer::~Renderer()
 	{
-
 	}
 
 	std::shared_ptr<Renderer> Renderer::build()

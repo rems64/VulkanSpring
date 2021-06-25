@@ -5,7 +5,7 @@
 
 namespace SE
 {
-	Pipeline::Pipeline()
+	Pipeline::Pipeline(vk::ShaderModule vertShaderModule, vk::ShaderModule fragShaderModule)
 	{
 
 	}
@@ -15,13 +15,13 @@ namespace SE
 
 	}
 
-	std::shared_ptr<Pipeline> Pipeline::build()
+	std::shared_ptr<Pipeline> Pipeline::build(vk::ShaderModule vertShaderModule, vk::ShaderModule fragShaderModule)
 	{
 		switch (RenderingApi::getApi())
 		{
 			case RenderingApi::Api::SE_VULKAN:
 			{
-				return std::make_shared<VulkanPipeline>();
+				return std::make_shared<VulkanPipeline>(vertShaderModule, fragShaderModule);
 			}
 		}
 	}

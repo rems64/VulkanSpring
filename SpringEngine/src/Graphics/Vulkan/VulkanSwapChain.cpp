@@ -109,6 +109,42 @@ namespace SE
 														} };
 			m_swapChainImageViews[i] = VulkanRenderer::getDevice()->getDevice()->createImageView(imageViewCreateInfos);
 		}
+
+		vk::AttachmentDescription colorAttachment
+		{
+			.format = format.format,
+			.samples = vk::SampleCountFlagBits::e1,
+			.loadOp = vk::AttachmentLoadOp::eClear,
+			.storeOp = vk::AttachmentStoreOp::eStore,
+			.stencilLoadOp = vk::AttachmentLoadOp::eDontCare,
+			.stencilStoreOp = vk::AttachmentStoreOp::eDontCare,
+			.initialLayout = vk::ImageLayout::eUndefined,
+			.finalLayout = vk::ImageLayout::ePresentSrcKHR
+		};
+
+		vk::AttachmentReference colorAttachmentRef
+		{
+			.attachment = 0,
+			.layout = vk::ImageLayout::eColorAttachmentOptimal
+		};
+
+		vk::SubpassDescription subpass
+		{
+			.pipelineBindPoint = vk::PipelineBindPoint::eGraphics,
+			.colorAttachmentCount = 1,
+			.pColorAttachments = &colorAttachmentRef
+		};
+
+		vk::RenderPassCreateInfo renderPassInfo
+		{
+			.attachmentCount = 1,
+			.pAttachments = &colorAttachment,
+			.subpassCount = 1,
+			.pSubpasses = &subpass
+		};
+
+		m_renderPass = VulkanRenderer::getDevice()->getDevice()->createRenderPass(renderPassInfo);
+
 	}
 
 	VulkanSwapChain::~VulkanSwapChain()
@@ -118,5 +154,6 @@ namespace SE
 			VulkanRenderer::getDevice()->getDevice()->destroyImageView(imageView);
 		}
 		VulkanRenderer::getDevice()->getDevice()->destroySwapchainKHR(*m_swapChain.get());
+		VulkanRenderer::getDevice()->getDevice()->destroyRenderPass(m_renderPass);
 	}
 }

@@ -6,6 +6,7 @@ namespace SE
 {
 	class Window;
 	class SwapChain;
+	class Viewport;
 	class SE_API VulkanSurface : public Surface
 	{
 	public:
@@ -16,5 +17,6 @@ namespace SE
 	private:
 		vk::SurfaceKHR m_surface;
 		std::shared_ptr<SwapChain> m_swapchain;
+		std::shared_ptr<Viewport> m_viewport;
 	};
 }

@@ -2,6 +2,7 @@
 
 namespace SE
 {
+	class Pipeline;
 	class SE_API Renderer
 	{
 	public:
@@ -9,5 +10,6 @@ namespace SE
 		virtual ~Renderer();
 
 		static std::shared_ptr<Renderer> build();
+	protected:
 	};
 }

@@ -5,7 +5,7 @@
 
 namespace SE
 {
-	Viewport::Viewport()
+	Viewport::Viewport(SwapChain* swapchain)
 	{
 
 	}
@@ -15,13 +15,13 @@ namespace SE
 
 	}
 
-	std::shared_ptr<Viewport> build()
+	std::shared_ptr<Viewport> Viewport::build(SwapChain* swapchain)
 	{
 		switch (RenderingApi::getApi())
 		{
 			case RenderingApi::Api::SE_VULKAN:
 			{
-				return std::make_shared<VulkanViewport>();
+				return std::make_shared<VulkanViewport>(swapchain);
 			}
 		}
 	}

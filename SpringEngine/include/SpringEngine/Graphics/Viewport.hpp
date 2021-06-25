@@ -2,13 +2,14 @@
 
 namespace SE
 {
+	class SwapChain;
 	class SE_API Viewport
 	{
 	public:
-		Viewport();
+		Viewport(SwapChain* swapchain);
 		~Viewport();
 
-		std::shared_ptr<Viewport> build();
+		static std::shared_ptr<Viewport> build(SwapChain* swapchain);
 	private:
 	};
 }

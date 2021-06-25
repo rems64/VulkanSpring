@@ -3,6 +3,8 @@
 #include <SpringEngine/Graphics/Vulkan/VulkanApi.hpp>
 #include <SpringEngine/Core/Window.hpp>
 #include <SpringEngine/Graphics/SwapChain.hpp>
+#include <SpringEngine/Graphics/Viewport.hpp>
+#include <SpringEngine/Graphics/Vulkan/VulkanViewport.hpp>
 
 namespace SE
 {
@@ -15,6 +17,7 @@ namespace SE
 		}
 		SE_CORE_TRACE("Created window surface");
 		m_swapchain = SwapChain::build(this);
+		m_viewport = Viewport::build(m_swapchain.get());
 	}
 
 	VulkanSurface::~VulkanSurface()
