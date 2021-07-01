@@ -4,24 +4,24 @@
 
 namespace SE
 {
-	class SE_API VulkanApi : public RenderingApi
+	class VulkanApi : public RenderingApi
 	{
 	public:
 		VulkanApi();
 		~VulkanApi();
 
-		virtual int init() override;
-		virtual int create() override;
-		virtual int destroy() override;
+		int init();
+		int destroy();
 
-		static vk::Instance& getInstance() { return m_instance; };
-
-		void setupValidationLayers();
-		std::vector<vk::ExtensionProperties> getAvailableExtensions();
+		void createInstance();
+		std::vector<const char*> getExtensions();
+		bool checkValidationLayers();
+		static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(VkDebugUtilsMessageSeverityFlagBitsEXT severity, VkDebugUtilsMessageTypeFlagsEXT type, const VkDebugUtilsMessengerCallbackDataEXT* callbackData, void* userData);
+		void setupDebugMessenger();
+		static vk::Instance getInstance() { return m_instance; };
 	private:
-		std::vector<const char*> m_validationLayers;
-		bool m_enableValidationLayers;
-
 		static vk::Instance m_instance;
+		const std::vector<const char*> m_validationLayers;
+		vk::DebugUtilsMessengerEXT m_debugMessenger;
 	};
 }

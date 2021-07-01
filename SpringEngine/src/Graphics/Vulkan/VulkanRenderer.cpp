@@ -1,22 +1,26 @@
+#pragma once
 #include <SpringEngine/Graphics/Vulkan/VulkanRenderer.hpp>
-
-#include <SpringEngine/Graphics/Vulkan/Device.hpp>
-#include <SpringEngine/Graphics/Pipeline.hpp>
-
 
 namespace SE
 {
-	std::shared_ptr<Device> VulkanRenderer::m_device;
-
-	VulkanRenderer::VulkanRenderer() : Renderer()
+	VulkanRenderer::VulkanRenderer(RendererSpecifications specs) : Renderer(specs)
 	{
-		m_device = std::shared_ptr<Device>(new Device({ .discreteGpu = true, .computeShader = true, .swapChainSupport = true }));
-		m_pipeline = Pipeline::build();
+		if (m_specs.api != RenderingApi::Api::Vulkan)
+			SE_CORE_ERROR("An error occured while initialising renderer");
+
 	}
 
 	VulkanRenderer::~VulkanRenderer()
 	{
-		m_pipeline.~shared_ptr();
-		m_device.~shared_ptr();
+		m_renderingApi->destroy();
+	}
+
+	int VulkanRenderer::init()
+	{
+		SE_VK_DEBUG(SE_CORE_TRACE("VulkanRenderer init"));
+		m_renderingApi = makeShared<VulkanApi>();
+		m_renderingApi->init();
+		m_defaultDevice = makeShared<VulkanDevice>();
+		return 0;
 	}
 }

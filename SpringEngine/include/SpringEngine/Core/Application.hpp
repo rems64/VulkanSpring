@@ -1,7 +1,7 @@
 #pragma once
 
-#include <SpringEngine/Graphics/RenderingApi.hpp>
 #pragma warning( disable:4251 )
+#include <SpringEngine/Graphics/RenderingApi.hpp>
 
 namespace SE
 {
@@ -9,7 +9,6 @@ namespace SE
 	class Renderer;
 	struct SE_ApplicationSettings
 	{
-		RenderingApi::Api renderingApi;
 	};
 	class SE_API Application
 	{
@@ -18,9 +17,7 @@ namespace SE
 		Application(const char* name);
 		~Application();
 
-		static enum RenderingApi::Api getRenderingApi();
 		static const char* getName() { return m_instance->m_name; };
-		void selectRenderingApi(enum RenderingApi::Api api);
 
 		void startup();
 		void run();
@@ -34,10 +31,11 @@ namespace SE
 	private:
 		static Application* m_instance;
 		const char* m_name;
-		std::shared_ptr<RenderingApi> m_renderingApi;
 		struct SE_ApplicationSettings m_settings;
-		std::vector<std::shared_ptr<Window>> m_windows;
 		bool m_running;
+
+		std::vector<std::shared_ptr<Window>> m_windows;
+		RenderingApi::Api m_renderingApi;
 		std::shared_ptr<Renderer> m_renderer;
 	};
 

@@ -6,7 +6,7 @@
 namespace SE
 {
 	Application* Application::m_instance = nullptr;
-	Application::Application() : m_name("Application"), m_renderingApi()
+	Application::Application() : m_name("Application")
 	{
 		SE_PROFILE_FUNCTION();
 		Log::init();
@@ -20,7 +20,7 @@ namespace SE
 		startup();
 	}
 
-	Application::Application(const char* name) : m_name(name), m_renderingApi()
+	Application::Application(const char* name) : m_name(name)
 	{
 		Log::init();
 		SE_CORE_INFO("Application started");
@@ -36,42 +36,24 @@ namespace SE
 	Application::~Application()
 	{
 		SE_CORE_INFO("Closing app...");
-		m_renderer->~Renderer();
-		m_renderingApi->~RenderingApi();
-	}
-
-	void Application::selectRenderingApi(RenderingApi::Api api)
-	{
-		switch (api)
-		{
-			case RenderingApi::Api::SE_VULKAN: m_settings.renderingApi = RenderingApi::Api::SE_VULKAN;
-			case RenderingApi::Api::SE_OPENGL: m_settings.renderingApi = RenderingApi::Api::SE_OPENGL;
-		}
-	}
-
-	enum RenderingApi::Api Application::getRenderingApi()
-	{
-		return m_instance->m_renderingApi->getApi();
 	}
 
 	void Application::startup()
 	{
 		m_running = true;
-		m_settings.renderingApi = RenderingApi::Api::SE_VULKAN;
 		if (!glfwInit())
 		{
 			SE_CORE_CRITICAL("GLFW failed to initialize");
 		}
 		glfwSetErrorCallback(glfwErrorCallback);
-		m_renderingApi = RenderingApi::build();
-		m_renderingApi->init();
-		m_renderingApi->create();
 
-		m_renderer = Renderer::build();
-
-		std::shared_ptr<Window> defaultWindow = std::make_shared<Window>("Vulkan powered window", 1280, 720);
+		std::shared_ptr<Window> defaultWindow = std::make_shared<Window>(WindowSpecs{ .title = "Vulkan powered window", .width = 1600, .height = 900, .frameless = false, .fullscreen = false });
 		m_windows.emplace_back(defaultWindow);
 
+		m_renderingApi = RenderingApi::Api::Vulkan;
+		//m_renderer = Renderer::build(m_renderingApi, defaultWindow.get());
+		m_renderer = Renderer::build( { .api = m_renderingApi, .mode = Renderer::Modes::OnScreen, .type = Renderer::Types::Renderer2D, .surface = nullptr } );
+		m_renderer->init();
 	}
 
 	void Application::run()

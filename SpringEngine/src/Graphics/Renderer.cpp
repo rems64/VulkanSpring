@@ -1,12 +1,12 @@
 #include <SpringEngine/Graphics/Renderer.hpp>
 
-#include <SpringEngine/Graphics/RenderingApi.hpp>
-#include <SpringEngine/Graphics/Vulkan/VulkanRenderer.hpp>
-#include <SpringEngine/Graphics/Pipeline.hpp>
+#include <SpringEngine/Graphics/OpenGL/OpenGLRenderer.hpp>
+#include <SpringEngine/Graphics/Vulkan/VulkanRenderer2D.hpp>
+#include <SpringEngine/Core/Window.hpp>
 
 namespace SE
 {
-	Renderer::Renderer()
+	Renderer::Renderer(RendererSpecifications specs) : m_specs(specs)
 	{
 	}
 
@@ -14,18 +14,34 @@ namespace SE
 	{
 	}
 
-	std::shared_ptr<Renderer> Renderer::build()
+	std::shared_ptr<Renderer> Renderer::build(RendererSpecifications specs)
 	{
-		switch (RenderingApi::getApi())
+		
+		switch (specs.api)
 		{
-			case RenderingApi::Api::SE_VULKAN:
+			case RenderingApi::Api::None:
 			{
-				return std::make_shared<VulkanRenderer>();
+				SE_CORE_ERROR("Rendering without an API isn't supported yet");
+				throw std::runtime_error("Rendering without an API isn't supported yet");
+			}
+			case RenderingApi::Api::Vulkan:
+			{
+				switch (specs.type)
+				{
+					case Renderer::Types::Renderer2D:
+					{
+						SE_CORE_INFO("Initialising Vulkan renderer 2D");
+						return makeShared<VulkanRenderer2D>(specs);
+					}
+				}
+			}
+			case RenderingApi::Api::OpenGL:
+			{
+				SE_CORE_INFO("Initialasing OpenGL renderer");
+				return makeShared<OpenGLRenderer>(specs);
 			}
 			default:
-			{
-				return std::make_shared<Renderer>();
-			}
+				throw std::runtime_error("Rendering without an API isn't supported yet");
 		}
 	}
 }

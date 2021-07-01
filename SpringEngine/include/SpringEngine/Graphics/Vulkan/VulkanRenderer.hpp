@@ -1,24 +1,20 @@
 #pragma once
-#pragma warning( disable:4251 )
 
 #include <SpringEngine/Graphics/Renderer.hpp>
+#include <SpringEngine/Graphics/Vulkan/VulkanApi.hpp>
+#include <SpringEngine/Graphics/Vulkan/VulkanDevice.hpp>
 
 namespace SE
 {
-	// Forward declaration
-	class Device;
-	class Pipeline;
-
 	class SE_API VulkanRenderer : public Renderer
 	{
 	public:
-		VulkanRenderer();
-		virtual ~VulkanRenderer();
+		VulkanRenderer(RendererSpecifications specs);
+		~VulkanRenderer();
 
-		static Device* getDevice() { return m_device.get(); };
-		Pipeline* getPipeline() { return m_pipeline.get(); };
+		virtual int init() override;
 	private:
-		static std::shared_ptr<Device> m_device;
-		std::shared_ptr<Pipeline> m_pipeline;
+		Shared<VulkanApi> m_renderingApi;
+		Shared<VulkanDevice> m_defaultDevice;
 	};
 }

@@ -1,16 +1,20 @@
 #pragma once
 
-#include <SpringEngine/Graphics/Surface.hpp>
-
 namespace SE
 {
-	class Swapchain;
-	class Surface;
+	struct WindowSpecs
+	{
+		const char* title = "Default title";
+		uint32_t width;
+		uint32_t height;
+		bool frameless = false;
+		bool fullscreen = false;
+	};
 	class Window
 	{
 	public:
 		Window();
-		Window(const char* title, uint32_t width, uint32_t height);
+		Window(WindowSpecs);
 		~Window();
 
 		void init();
@@ -19,11 +23,8 @@ namespace SE
 		GLFWwindow* getNative() { return m_window; };
 
 	private:
-		const char* m_name;
-		uint32_t m_width;
-		uint32_t m_height;
+		WindowSpecs m_specs;
 		GLFWwindow* m_window;
-		std::shared_ptr<Surface> m_surface;
 		bool m_shouldClose;
 	};
 }

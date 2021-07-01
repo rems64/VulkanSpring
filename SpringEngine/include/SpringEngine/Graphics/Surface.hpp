@@ -2,16 +2,12 @@
 
 namespace SE
 {
-	class Window;
-	class Surface
+	class SE_API Surface
 	{
 	public:
-		Surface(Window* window);
-		virtual ~Surface();
+		Surface();
+		~Surface();
 
-		static std::shared_ptr<Surface> build(Window* window);
-		Window* getWindow() { return m_linkedWindow; };
-	private:
-		Window* m_linkedWindow;
+		Shared<Surface> build();
 	};
 }

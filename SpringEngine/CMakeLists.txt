@@ -15,24 +15,19 @@ include_directories( "include/" "lib/ImGui" "lib/ImGuizmo-master" "lib/ImGui/bac
 
 set(SRCS
 	"src/Core/Application.cpp"
-	"src/Debug/Instrumentator.cpp"
-	"src/Debug/Logger.cpp"
-	"src/Graphics/Vulkan/VulkanApi.cpp"
-	"src/Graphics/RenderingApi.cpp"
+	"src/Misc/Instrumentator.cpp"
+	"src/Misc/Logger.cpp"
 	"src/Core/Window.cpp"
-	"src/Graphics/Vulkan/Device.cpp"
-	"src/Graphics/Vulkan/QueueFamily.cpp"
 	"src/Graphics/Renderer.cpp"
+	"src/Graphics/OpenGL/OpenGLRenderer.cpp"
 	"src/Graphics/Vulkan/VulkanRenderer.cpp"
-	"src/Graphics/Vulkan/VulkanSurface.cpp"
+	"src/Graphics/OpenGL/OpenGLApi.cpp"
+	"src/Graphics/Vulkan/VulkanApi.cpp"
+	"src/Graphics/Vulkan/VulkanDevice.cpp"
+	"src/Graphics/Vulkan/VulkanPhysicalDevice.cpp"
+	"src/Graphics/Vulkan/VulkanQueueFamily.cpp"
+	"src/Graphics/Vulkan/VulkanRenderer2D.cpp"
 	"src/Graphics/Surface.cpp"
-	"src/Graphics/SwapChain.cpp"
-	"src/Graphics/Vulkan/VulkanSwapChain.cpp"
-	"src/Graphics/Shader.cpp"
-	"src/Graphics/Pipeline.cpp"
-	"src/Graphics/Vulkan/VulkanPipeline.cpp"
-	"src/Graphics/Viewport.cpp"
-	"src/Graphics/Vulkan/VulkanViewport.cpp"
 	)
 
 set(IMGUI_SRCS
