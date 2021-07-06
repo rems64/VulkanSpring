@@ -23,6 +23,7 @@ namespace SE
 		void run();
 		void frame();
 
+		static Renderer* getRenderer() { return m_instance->m_renderer.get(); };
 		static Application* get() { return m_instance; };
 	private:
 		Application(const Application&);

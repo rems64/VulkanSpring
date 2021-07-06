@@ -2,6 +2,7 @@
 
 #include <SpringEngine/Core/Application.hpp>
 #include <SpringEngine/Graphics/Vulkan/VulkanApi.hpp>
+#include <SpringEngine/Graphics/Vulkan/VulkanQueueFamily.hpp>
 
 namespace SE
 {
@@ -26,7 +27,7 @@ namespace SE
 	std::vector<std::pair<int, vk::PhysicalDevice>> VulkanPhysicalDevice::getSuitablePhysicalDevices(VulkanPhysicalDeviceRequirements requirements)
 	{
 		SE_VK_DEBUG(SE_CORE_TRACE("Picking device"));
-		std::vector<vk::PhysicalDevice> physicalDevices = VulkanApi::getInstance().enumeratePhysicalDevices();
+		std::vector<vk::PhysicalDevice> physicalDevices = VulkanApi::getInstance()->enumeratePhysicalDevices();
 		std::vector<std::pair<int, vk::PhysicalDevice>> scoredPhysicalDevices = {};
 		for (vk::PhysicalDevice physDevice : physicalDevices)
 		{
@@ -58,6 +59,8 @@ namespace SE
 	void VulkanPhysicalDevice::constructQueueFamilies()
 	{
 		m_queueFamilies.reserve(2);
+		m_queueFamilies.emplace_back(std::make_pair(VulkanQueueFamily::Types::Graphics,     makeShared<VulkanQueueFamily>(VulkanQueueFamily::VulkanQueueFamilyRequirements{ .physicalDevice = this, .type = VulkanQueueFamily::Types::Graphics,     .surface = nullptr })));
+		m_queueFamilies.emplace_back(std::make_pair(VulkanQueueFamily::Types::Presentation, makeShared<VulkanQueueFamily>(VulkanQueueFamily::VulkanQueueFamilyRequirements{ .physicalDevice = this, .type = VulkanQueueFamily::Types::Presentation, .surface = m_requirements.surface })));
 	}
 
 	bool VulkanPhysicalDevice::isPhysicalDeviceSuitable(vk::PhysicalDevice physicalDevice, VulkanPhysicalDeviceRequirements requirements)
@@ -71,10 +74,17 @@ namespace SE
 				return false;
 			}
 		}
-		if (requirements.supportPresentation)
-		{
-			//physicalDevice.getSurfaceSupportKHR()
-		}
 		return true;
+	}
+
+	VulkanQueueFamily* VulkanPhysicalDevice::getQueueFamily(VulkanQueueFamily::Types type)
+	{
+		for (auto queueFamily : m_queueFamilies)
+		{
+			if (queueFamily.first == type)
+			{
+				return queueFamily.second.get();
+			}
+		}
 	}
 }

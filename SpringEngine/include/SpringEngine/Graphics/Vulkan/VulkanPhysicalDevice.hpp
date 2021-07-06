@@ -25,9 +25,10 @@ namespace SE
 		static bool isPhysicalDeviceSuitable(vk::PhysicalDevice physicalDevice, VulkanPhysicalDeviceRequirements requirements);
 		inline vk::PhysicalDevice* const getPhysicalDevice() { return &m_physicalDevice; };
 		inline VulkanPhysicalDeviceRequirements* getRequirements() { return &m_requirements; };
+		VulkanQueueFamily* getQueueFamily(VulkanQueueFamily::Types type);
 	private:
 		vk::PhysicalDevice m_physicalDevice;
 		VulkanPhysicalDeviceRequirements m_requirements;
-		std::vector<std::pair<VulkanQueueFamily::Types, VulkanQueueFamily>> m_queueFamilies;
+		std::vector<std::pair<VulkanQueueFamily::Types, Shared<VulkanQueueFamily>>> m_queueFamilies;
 	};
 }

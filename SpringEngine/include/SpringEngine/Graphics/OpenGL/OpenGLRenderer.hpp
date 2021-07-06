@@ -12,6 +12,7 @@ namespace SE
 		OpenGLRenderer(Renderer::RendererSpecifications specs);
 		~OpenGLRenderer();
 
+		virtual int coreInit() override;
 		virtual int init() override;
 	private:
 		Shared<OpenGLApi> m_renderingApi;

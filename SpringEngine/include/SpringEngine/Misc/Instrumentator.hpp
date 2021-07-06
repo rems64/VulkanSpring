@@ -19,7 +19,7 @@ namespace SE
     public:
         Instrumentor();
         ~Instrumentor();
-        void beginSession(const std::string& name, const std::string& filepath = "results.json");
+        void beginSession(const std::string& name, const std::string& filepath = "log/profiling.json");
         void endSession();
         void writeProfile(const ProfileResult& result);
 
@@ -55,10 +55,10 @@ namespace SE
     };
 }
 
-#ifdef SE_DEBUG
-#define SE_PROFILE_SCOPE(name)  InstrumentationTimer timer##__LINE__(name)
+#if !defined NDEBUG || defined FILELOG
+#define SE_PROFILE_SCOPE(name)  SE::InstrumentationTimer timer##__LINE__(name)
 #define SE_PROFILE_FUNCTION() SE_PROFILE_SCOPE(__FUNCSIG__)
 #else
-#define SE_PROFILE_SCOPE(name)
-#define SE_PROFILE_FUNCTION()
+#define SE_PROFILE_SCOPE(name) do { } while(0)
+#define SE_PROFILE_FUNCTION() do { } while(0)
 #endif

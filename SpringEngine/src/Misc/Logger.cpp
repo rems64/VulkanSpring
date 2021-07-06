@@ -13,25 +13,38 @@ void SE::Log::init()
 	//spdlog::set_pattern("%^[%T] [%=n] %v%$");
 	//spdlog::set_pattern("[%=n] %v%$"); // Right
 	spdlog::init_thread_pool(8192, 2);
+	#ifndef NDEBUG
+		m_stdCoreLogger = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
+		m_stdCoreLogger->set_pattern("[%=n] %v%$");
+		m_fileCoreLogger = std::make_shared<spdlog::sinks::rotating_file_sink_mt>("log/core_log.log", 1024*10, 3);
+		m_fileCoreLogger->set_pattern("[%=D] [%=T] [%=n] %v%$");
 	
-	m_stdCoreLogger = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
-	m_stdCoreLogger->set_pattern("[%=n] %v%$");
-	m_fileCoreLogger = std::make_shared<spdlog::sinks::rotating_file_sink_mt>("log/core_log.log", 1024*10, 3);
-	m_fileCoreLogger->set_pattern("[%=n] %v%$");
-	
-	std::vector<spdlog::sink_ptr> coreSinks{ m_fileCoreLogger, m_stdCoreLogger };
-	m_coreLogger = std::make_shared<spdlog::async_logger>("ENGINE", coreSinks.begin(), coreSinks.end(), spdlog::thread_pool(), spdlog::async_overflow_policy::block);
-	spdlog::register_logger(m_coreLogger);
+		std::vector<spdlog::sink_ptr> coreSinks{ m_fileCoreLogger, m_stdCoreLogger };
+		m_coreLogger = std::make_shared<spdlog::async_logger>("ENGINE", coreSinks.begin(), coreSinks.end(), spdlog::thread_pool(), spdlog::async_overflow_policy::block);
+		spdlog::register_logger(m_coreLogger);
 
-	m_coreLogger->set_level(spdlog::level::trace);
-	m_stdCoreLogger->set_level(spdlog::level::trace);
-	m_fileCoreLogger->set_level(spdlog::level::trace);
+		m_coreLogger->set_level(spdlog::level::trace);
+		m_stdCoreLogger->set_level(spdlog::level::trace);
+		m_fileCoreLogger->set_level(spdlog::level::trace);
+	#else
+		m_fileCoreLogger = std::make_shared<spdlog::sinks::rotating_file_sink_mt>("log/core_log.log", 1024 * 10, 3);
+		m_fileCoreLogger->set_pattern("[%=D] [%=T] [%=n] %v%$");
+
+		std::vector<spdlog::sink_ptr> coreSinks{ m_fileCoreLogger };
+		m_coreLogger = std::make_shared<spdlog::async_logger>("ENGINE", coreSinks.begin(), coreSinks.end(), spdlog::thread_pool(), spdlog::async_overflow_policy::block);
+		spdlog::register_logger(m_coreLogger);
+
+		m_coreLogger->set_level(spdlog::level::trace);
+		m_fileCoreLogger->set_level(spdlog::level::trace);
+
+		m_coreLogger->debug("\n\n");
+	#endif
 
 
 	m_stdAppLogger = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
 	m_stdAppLogger->set_pattern("[%=n] %v%$");
 	m_fileAppLogger = std::make_shared<spdlog::sinks::rotating_file_sink_mt>("log/app_log.log", 1024 * 10, 3);
-	m_fileAppLogger->set_pattern("[%=n] %v%$");
+	m_fileAppLogger->set_pattern("[%=D] [%=T] [%=n] %v%$");
 
 	std::vector<spdlog::sink_ptr> appSinks{ m_fileAppLogger, m_stdAppLogger };
 	m_appLogger = std::make_shared<spdlog::async_logger>("APP", appSinks.begin(), appSinks.end(), spdlog::thread_pool(), spdlog::async_overflow_policy::block);

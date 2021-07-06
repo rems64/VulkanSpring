@@ -37,7 +37,9 @@ namespace SE
 	};
 }
 
-#ifndef NDEBUG
+#define FILELOG
+
+#if !defined NDEBUG || defined FILELOG
 #define SE_CORE_TRACE(...)            ::SE::Log::getCoreLogger()->trace(__VA_ARGS__)
 #define SE_CORE_INFO(...)             ::SE::Log::getCoreLogger()->info(__VA_ARGS__)
 #define SE_CORE_WARN(...)             ::SE::Log::getCoreLogger()->warn(__VA_ARGS__)

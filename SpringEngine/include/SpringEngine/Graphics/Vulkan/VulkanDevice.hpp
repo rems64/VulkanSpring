@@ -5,10 +5,15 @@
 
 namespace SE
 {
+	class Surface;
+	struct VulkanDeviceRequirements
+	{
+		Surface* surfaceToUse;
+	};
 	class SE_API VulkanDevice
 	{
 	public:
-		VulkanDevice();
+		VulkanDevice(VulkanDeviceRequirements requirements);
 		~VulkanDevice();
 
 	private:

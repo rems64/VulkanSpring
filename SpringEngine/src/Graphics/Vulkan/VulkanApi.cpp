@@ -20,6 +20,9 @@ namespace SE
 
 	int VulkanApi::init()
 	{
+		SE_VK_DEBUG(SE_CORE_INFO("Available extensions:"));
+		SE_VK_DEBUG(SE_ENUMERATE(getAvailableExtension(), extensionName));
+
 		createInstance();
 		#ifdef SE_DEBUG
 			setupDebugMessenger();
@@ -88,6 +91,12 @@ namespace SE
 		return extensions;
 	}
 
+
+	std::vector<vk::ExtensionProperties> VulkanApi::getAvailableExtension()
+	{
+		std::vector<vk::ExtensionProperties> extensions = vk::enumerateInstanceExtensionProperties();
+		return extensions;
+	}
 
 	bool VulkanApi::checkValidationLayers()
 	{

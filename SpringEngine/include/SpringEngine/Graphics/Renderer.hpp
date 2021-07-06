@@ -32,8 +32,10 @@ namespace SE
 		RenderingApi::Api getApi() { return m_specs.api; };
 		Renderer::Modes getMode() { return m_specs.mode; };
 		Renderer::Types getType() { return m_specs.type; };
-		Surface* getLinkinedSurface() { return m_specs.surface; };
+		Surface* getLinkedSurface() { return m_specs.surface; };
+		void setLinkedSurface(Surface* surface) { m_specs.surface = surface; };
 
+		virtual int coreInit() = 0;
 		virtual int init() = 0;
 
 		// BUILD

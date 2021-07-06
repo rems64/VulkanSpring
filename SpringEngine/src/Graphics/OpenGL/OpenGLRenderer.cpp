@@ -12,6 +12,11 @@ namespace SE
 
 	}
 
+	int OpenGLRenderer::coreInit()
+	{
+		return 0;
+	}
+
 	int OpenGLRenderer::init()
 	{
 		m_renderingApi = makeShared<OpenGLApi>();

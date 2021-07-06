@@ -13,7 +13,7 @@
 #define SE_CLASS(...)
 #define SE_PROPERTY(...)
 
-#ifdef SE_DEBUG
+#if defined SE_DEBUG || !defined SE_DBUG
 #define VK_VERBOSE
 #endif
 
@@ -23,7 +23,12 @@
 #define SE_VK_DEBUG(...) do { } while(0)
 #endif
 
-#define VK_CALL(WHAT) try { WHAT; } catch (const vk::SystemError& err) {	SE_CORE_CRITICAL("{}", err.what());	}
+#ifdef SE_DEBUG
+#define VK_CALL(WHAT) try { WHAT; } catch (const vk::SystemError& err) { SE_CORE_CRITICAL("{}", err.what());	  };
+#else
+#define VK_CALL(WHAT) WHAT;
+#endif
+#define SE_ENUMERATE(__array, __member) for (auto component : __array) { SE_CORE_TRACE("{}", component.__member); };
 
 
 namespace SE

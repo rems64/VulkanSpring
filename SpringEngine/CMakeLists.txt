@@ -28,7 +28,7 @@ set(SRCS
 	"src/Graphics/Vulkan/VulkanQueueFamily.cpp"
 	"src/Graphics/Vulkan/VulkanRenderer2D.cpp"
 	"src/Graphics/Surface.cpp"
-	)
+	"src/Graphics/Vulkan/VulkanSurface.cpp")
 
 set(IMGUI_SRCS
 	"lib/ImGui/imgui.cpp"

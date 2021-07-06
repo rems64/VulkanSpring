@@ -12,6 +12,7 @@ namespace SE
 		VulkanRenderer(RendererSpecifications specs);
 		~VulkanRenderer();
 
+		virtual int coreInit() override;
 		virtual int init() override;
 	private:
 		Shared<VulkanApi> m_renderingApi;
